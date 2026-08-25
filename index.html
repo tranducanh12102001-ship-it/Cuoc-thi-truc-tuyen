@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ Thống Thi Trực Tuyến</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #333; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+    .timer { font-size: 20px; font-weight: bold; color: #d9534f; background: #fee; padding: 8px 16px; border-radius: 4px; }
+    .warning { color: #d9534f; font-weight: bold; margin-bottom: 15px; }
+    .question-block { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
+    .question-title { font-weight: 600; font-size: 16px; margin-bottom: 12px; }
+    .option-label { display: block; margin: 8px 0; padding: 10px; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+    .option-label:hover { background: #f8f9fa; }
+    .option-label input { margin-right: 10px; }
+    .btn { background: #0056b3; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; }
+    .btn:hover { background: #004085; }
+    .input-group { margin-bottom: 15px; }
+    .input-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+    .input-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body oncontextmenu="return false;" oncopy="return false;" oncut="return false;" onpaste="return false;">
+
+<div class="container">
+  <!-- Màn hình đăng nhập & Bắt đầu -->
+  <div id="login-screen">
+    <h2 style="text-align: center; margin-bottom: 20px; color: #0056b3;">HỘI THI TRỰC TUYẾN</h2>
+    <div class="input-group">
+      <label>Họ và tên thí sinh:</label>
+      <input type="text" id="full-name" placeholder="Nguyễn Văn A" required>
+    </div>
+    <div class="input-group">
+      <label>Mã thí sinh / Số báo danh:</label>
+      <input type="text" id="user-id" placeholder="SBD01" required>
+    </div>
+    <p class="warning">⚠️ Lưu ý: Khi nhấn Bắt đầu, bài thi sẽ chuyển sang chế độ toàn màn hình. Mọi hành vi chuyển tab hoặc thoát toàn màn hình sẽ bị ghi nhận vi phạm.</p>
+    <button class="btn" onclick="startExam()">BẮT ĐẦU LÀM BÀI</button>
+  </div>
+
+  <!-- Màn hình làm bài -->
+  <div id="exam-screen" class="hidden">
+    <div class="header">
+      <div>
+        <strong id="display-candidate">Thí sinh: </strong>
+        <div style="font-size: 13px; color: #666;" id="violation-display">Số lần rời màn hình: 0</div>
+      </div>
+      <div class="timer" id="timer-display">15:00</div>
+    </div>
+    <form id="quiz-form">
+      <div id="questions-container"></div>
+      <button type="button" class="btn" onclick="submitExam(false)">NỘP BÀI</button>
+    </form>
+  </div>
+
+  <!-- Màn hình kết thúc -->
+  <div id="result-screen" class="hidden" style="text-align: center;">
+    <h2 style="color: #28a745; margin-bottom: 15px;">ĐÃ NỘP BÀI THÀNH CÔNG</h2>
+    <p style="font-size: 18px; margin-bottom: 10px;">Kết quả của bạn đã được ghi nhận vào hệ thống.</p>
+    <p id="score-summary" style="font-size: 20px; font-weight: bold; color: #0056b3;"></p>
+  </div>
+</div>
+
+<script>
+  // CẤU HÌNH HỆ THỐNG
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOOFw-3NI8z-mGhZ5dwtdncc_LhZK8flT0di_d0dD-xsbgpyJ2wa0Da6UODcVgoRiz/exec";
+  const DURATION_MINUTES = 15;
+  const MAX_VIOLATIONS = 3;
+
+  // NGÂN HÀNG CÂU HỎI
+  const rawQuestions = [
+    {
+      id: 1,
+      question: "Cơ quan nào có thẩm quyền thực hành quyền công tố và kiểm sát hoạt động tư pháp?",
+      options: ["Viện kiểm sát nhân dân", "Tòa án nhân dân", "Cơ quan Công an", "Thanh tra Chính phủ"],
+      correct: 0
+    },
+    {
+      id: 2,
+      question: "Hệ thống xác thực định danh điện tử quốc gia của Việt Nam có tên gọi là gì?",
+      options: ["VNeID", "VSSID", "eTax Mobile", "Căn cước điện tử"],
+      correct: 0
+    },
+    {
+      id: 3,
+      question: "Đâu là biện pháp phòng ngừa rủi ro mất an toàn thông tin khi duyệt web?",
+      options: ["Không mở liên kết lạ nhận từ email/tin nhắn không xác định", "Sử dụng cùng 1 mật khẩu cho mọi tài khoản", "Tắt tính năng tường lửa trên máy tính", "Lưu mật khẩu tự động trên máy công cộng"],
+      correct: 0
+    }
+  ];
+
+  let candidate = { fullName: "", userId: "" };
+  let violationCount = 0;
+  let remainingSeconds = DURATION_MINUTES * 60;
+  let timerInterval = null;
+  let randomizedQuestions = [];
+  let isSubmitted = false;
+  let startTime = 0;
+
+  function shuffle(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function startExam() {
+    const fullName = document.getElementById('full-name').value.trim();
+    const userId = document.getElementById('user-id').value.trim();
+    if (!fullName || !userId) {
+      alert("Vui lòng điền đầy đủ Họ tên và Mã thí sinh.");
+      return;
+    }
+
+    candidate.fullName = fullName;
+    candidate.userId = userId;
+
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('exam-screen').classList.remove('hidden');
+    document.getElementById('display-candidate').innerText = `Thí sinh: ${fullName} (${userId})`;
+
+    startTime = Date.now();
+    renderQuestions();
+    startTimer();
+    bindAntiCheatEvents();
+  }
+
+  function renderQuestions() {
+    const container = document.getElementById('questions-container');
+    randomizedQuestions = shuffle(rawQuestions).map(q => {
+      let mappedOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
+      mappedOptions = shuffle(mappedOptions);
+      return { ...q, options: mappedOptions };
+    });
+
+    container.innerHTML = randomizedQuestions.map((q, qIndex) => `
+      <div class="question-block">
+        <div class="question-title">Câu ${qIndex + 1}: ${q.question}</div>
+        ${q.options.map((opt, oIndex) => `
+          <label class="option-label">
+            <input type="radio" name="q_${q.id}" value="${oIndex}">
+            ${opt.text}
+          </label>
+        `).join('')}
+      </div>
+    `).join('');
+  }
+
+  function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      remainingSeconds--;
+      updateTimerDisplay();
+      if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        alert("Đã hết thời gian làm bài! Hệ thống tự động thu bài.");
+        submitExam(true);
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const min = Math.floor(remainingSeconds / 60);
+    const sec = remainingSeconds % 60;
+    document.getElementById('timer-display').innerText = 
+      `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+  }
+
+  function bindAntiCheatEvents() {
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && !isSubmitted) {
+        registerViolation("Chuyển tab hoặc rời màn hình làm bài");
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (
+        e.key === 'F12' || 
+        (e.ctrlKey && ['c', 'v', 'u', 's', 'a', 'p'].includes(e.key.toLowerCase()))
+      ) {
+        e.preventDefault();
+      }
+    });
+  }
+
+  function registerViolation(reason) {
+    violationCount++;
+    document.getElementById('violation-display').innerText = `Số lần rời màn hình: ${violationCount}`;
+    alert(`CẢNH BÁO VI PHẠM: Bạn vừa rời khỏi giao diện bài thi (${violationCount}/${MAX_VIOLATIONS}).`);
+    
+    if (violationCount >= MAX_VIOLATIONS) {
+      alert("Bạn đã vi phạm quy chế quá số lần quy định. Hệ thống tự động nộp bài!");
+      submitExam(true);
+    }
+  }
+
+  function submitExam(forced = false) {
+    if (isSubmitted) return;
+    if (!forced && !confirm("Bạn có chắc chắn muốn nộp bài?")) return;
+
+    isSubmitted = true;
+    clearInterval(timerInterval);
+
+    let score = 0;
+    randomizedQuestions.forEach(q => {
+      const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
+      if (selected) {
+        const selectedIdx = parseInt(selected.value);
+        if (q.options[selectedIdx].isCorrect) score++;
+      }
+    });
+
+    const payload = {
+      fullName: candidate.fullName,
+      userId: candidate.userId,
+      score: score,
+      totalQuestions: randomizedQuestions.length,
+      violationCount: violationCount,
+      timeSpent: Math.round((Date.now() - startTime) / 1000)
+    };
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(err => console.error("Lỗi gửi dữ liệu:", err));
+
+    if (document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    }
+
+    document.getElementById('exam-screen').classList.add('hidden');
+    document.getElementById('result-screen').classList.remove('hidden');
+    document.getElementById('score-summary').innerText = `Điểm số: ${score} / ${randomizedQuestions.length}`;
+  }
+</script>
+</body>
+</html>
