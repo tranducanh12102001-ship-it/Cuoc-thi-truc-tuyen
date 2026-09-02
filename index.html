@@ -21,38 +21,46 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 20px;
-      margin-bottom: 25px;
+      gap: 22px;
+      margin-bottom: 26px;
     }
     .unit-brand-header img {
-      width: 76px;
-      height: 76px;
+      width: 92px;
+      height: 92px;
       object-fit: contain;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.15));
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       flex-shrink: 0;
     }
+    /* CĂN GIỮA DÒNG 2 SO VỚI DÒNG 1 */
     .unit-brand-text {
-      text-align: left;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
+    /* DÒNG 1: VIỆN KIỂM SÁT NHÂN DÂN KHU VỰC 1 - HÀ TĨNH */
     .unit-brand-text h1 {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      font-size: 22.5px;
+      font-weight: 750;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
       white-space: nowrap;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
+    /* DÒNG 2: HỆ THỐNG THI TRỰC TUYẾN */
     .unit-brand-text h2 {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
+      font-size: 20px;
+      font-weight: 750;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     /* 1. KHUNG ĐĂNG NHẬP */
     .portal-box {
       width: 100%;
-      max-width: 880px;
+      max-width: 900px;
       background: linear-gradient(145deg, #186bd1, #1456a7);
       color: #fff;
       border-radius: 12px;
@@ -60,8 +68,8 @@
       box-shadow: 0 15px 35px rgba(20, 86, 167, 0.25), 0 5px 15px rgba(0,0,0,0.08);
       border: 1px solid rgba(255,255,255,0.15);
     }
-    .portal-box .unit-brand-text h1 { color: #ffffff; text-shadow: 1px 2px 3px rgba(0,0,0,0.25); }
-    .portal-box .unit-brand-text h2 { color: #fffbdf; text-shadow: 1px 2px 4px rgba(0,0,0,0.2); }
+    .portal-box .unit-brand-text h1 { color: #ffffff; text-shadow: 1px 2px 4px rgba(0,0,0,0.3); }
+    .portal-box .unit-brand-text h2 { color: #fff8bf; text-shadow: 1px 2px 4px rgba(0,0,0,0.25); }
 
     /* KHUNG CẢNH BÁO */
     .notice-bar {
@@ -95,7 +103,7 @@
     /* FORM ĐĂNG NHẬP */
     .form-container {
       width: 100%;
-      max-width: 590px;
+      max-width: 600px;
       margin: 0 auto;
     }
     .form-row {
@@ -175,20 +183,19 @@
     /* 2. GIAO DIỆN LÀM BÀI & KẾT QUẢ */
     .exam-box {
       width: 100%;
-      max-width: 880px;
+      max-width: 900px;
       background: #fff;
       color: #333;
       padding: 35px 45px;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
-    /* Header đơn vị trong trang thi nền trắng */
     .exam-box .unit-brand-text h1 { color: #1456a7; }
     .exam-box .unit-brand-text h2 { color: #d9534f; }
     .exam-box .unit-brand-header {
       border-bottom: 2px solid #eef2f7;
-      padding-bottom: 18px;
-      margin-bottom: 20px;
+      padding-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .exam-sub-header {
@@ -305,7 +312,6 @@
 
   <!-- 2. MÀN HÌNH LÀM BÀI -->
   <div id="exam-screen" class="exam-box hidden">
-    <!-- Header thương hiệu cho trang thi -->
     <div class="unit-brand-header">
       <img src="logo.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/vi/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original'" alt="Phù hiệu VKSND">
       <div class="unit-brand-text">
@@ -314,7 +320,6 @@
       </div>
     </div>
 
-    <!-- Thanh thông tin thí sinh & Đồng hồ đếm ngược -->
     <div class="exam-sub-header">
       <div>
         <strong id="display-candidate" style="color: #1456a7; font-size: 16px;">Thí sinh: </strong>
@@ -331,8 +336,7 @@
 
   <!-- 3. MÀN HÌNH KẾT QUẢ -->
   <div id="result-screen" class="exam-box hidden" style="text-align: center; padding: 40px;">
-    <!-- Header thương hiệu cho trang kết quả -->
-    <div class="unit-brand-header" style="justify-content: center; margin-bottom: 30px;">
+    <div class="unit-brand-header" style="margin-bottom: 30px;">
       <img src="logo.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/vi/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original'" alt="Phù hiệu VKSND">
       <div class="unit-brand-text">
         <h1>VIỆN KIỂM SÁT NHÂN DÂN KHU VỰC 1 - HÀ TĨNH</h1>
