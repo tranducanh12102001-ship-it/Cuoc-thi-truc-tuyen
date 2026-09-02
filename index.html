@@ -13,7 +13,7 @@
       display: flex; 
       align-items: center; 
       justify-content: center; 
-      padding: 30px 20px; 
+      padding: 15px; 
     }
 
     /* HEADER CHUNG CỦA ĐƠN VỊ */
@@ -21,14 +21,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 22px;
-      margin-bottom: 26px;
+      gap: 18px;
+      margin-bottom: 24px;
     }
     .unit-brand-header img {
-      width: 92px;
-      height: 92px;
+      width: 84px;
+      height: 84px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
       flex-shrink: 0;
     }
     .unit-brand-text {
@@ -39,29 +39,29 @@
       justify-content: center;
     }
     .unit-brand-text h1 {
-      font-size: 22.5px;
-      font-weight: 750;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      white-space: nowrap;
-      margin-bottom: 6px;
-    }
-    .unit-brand-text h2 {
       font-size: 20px;
       font-weight: 750;
-      letter-spacing: 1.2px;
+      letter-spacing: 0.5px;
       text-transform: uppercase;
-      white-space: nowrap;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .unit-brand-text h2 {
+      font-size: 18px;
+      font-weight: 750;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1.3;
     }
 
     /* 1. KHUNG ĐĂNG NHẬP */
     .portal-box {
       width: 100%;
-      max-width: 900px;
+      max-width: 880px;
       background: linear-gradient(145deg, #186bd1, #1456a7);
       color: #fff;
       border-radius: 12px;
-      padding: 42px 55px 35px 55px;
+      padding: 40px 45px 30px 45px;
       box-shadow: 0 15px 35px rgba(20, 86, 167, 0.25), 0 5px 15px rgba(0,0,0,0.08);
       border: 1px solid rgba(255,255,255,0.15);
     }
@@ -73,13 +73,13 @@
       background: #fff9d6;
       color: #524400;
       border-radius: 8px;
-      padding: 11px 18px;
+      padding: 11px 16px;
       display: flex;
       align-items: center;
       gap: 12px;
       font-size: 14px;
       font-weight: 500;
-      margin-bottom: 30px;
+      margin-bottom: 26px;
       box-shadow: 0 3px 8px rgba(0,0,0,0.06);
     }
     .notice-icon {
@@ -95,7 +95,6 @@
       font-size: 13px;
       flex-shrink: 0;
     }
-    .notice-text { white-space: nowrap; }
 
     /* FORM ĐĂNG NHẬP */
     .form-container {
@@ -114,7 +113,6 @@
       font-weight: 600;
       text-align: right;
       padding-right: 18px;
-      white-space: nowrap;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
     .form-input-wrap { flex: 1; }
@@ -169,21 +167,21 @@
     }
     .portal-footer {
       border-top: 1px solid rgba(255,255,255,0.2);
-      margin-top: 32px;
-      padding-top: 18px;
+      margin-top: 30px;
+      padding-top: 16px;
       text-align: center;
       font-size: 13.5px;
-      line-height: 1.65;
+      line-height: 1.6;
       color: #dbe7fc;
     }
 
     /* 2. GIAO DIỆN LÀM BÀI & KẾT QUẢ */
     .exam-box {
       width: 100%;
-      max-width: 900px;
+      max-width: 880px;
       background: #fff;
       color: #333;
-      padding: 35px 45px;
+      padding: 30px 40px;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
@@ -191,10 +189,9 @@
     .exam-box .unit-brand-text h2 { color: #d9534f; }
     .exam-box .unit-brand-header {
       border-bottom: 2px solid #eef2f7;
-      padding-bottom: 20px;
-      margin-bottom: 22px;
+      padding-bottom: 18px;
+      margin-bottom: 20px;
     }
-
     .exam-sub-header {
       display: flex;
       justify-content: space-between;
@@ -202,21 +199,21 @@
       background: #f8fafd;
       border: 1px solid #e2e8f0;
       border-radius: 8px;
-      padding: 12px 20px;
-      margin-bottom: 25px;
+      padding: 12px 18px;
+      margin-bottom: 24px;
     }
     .timer {
-      font-size: 19px;
+      font-size: 18px;
       font-weight: bold;
       color: #d9534f;
       background: #fee;
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: 6px;
       box-shadow: 0 2px 5px rgba(217, 83, 79, 0.15);
     }
     .question-block {
-      margin-bottom: 25px;
-      padding-bottom: 20px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
       border-bottom: 1px solid #f0f0f0;
     }
     .question-title {
@@ -229,7 +226,7 @@
       display: flex;
       align-items: center;
       margin: 8px 0;
-      padding: 12px 15px;
+      padding: 12px 14px;
       border: 1px solid #e0e0e0;
       border-radius: 8px;
       cursor: pointer;
@@ -259,6 +256,68 @@
     }
     .btn-submit:hover { background: #1251a3; }
     .hidden { display: none !important; }
+
+    /* ĐẶC TRỊ CHO ĐIỆN THOẠI VÀ MÀN HÌNH NHỎ (<= 680px) */
+    @media (max-width: 680px) {
+      body { padding: 10px; }
+      .portal-box, .exam-box { padding: 25px 16px; border-radius: 8px; }
+      
+      .unit-brand-header {
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .unit-brand-header img { width: 68px; height: 68px; }
+      .unit-brand-text h1 { font-size: 16px; }
+      .unit-brand-text h2 { font-size: 14.5px; }
+
+      .notice-bar {
+        font-size: 13px;
+        padding: 10px 12px;
+        margin-bottom: 20px;
+      }
+
+      /* Chuyển form thành bố cục dọc */
+      .form-row {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 15px;
+      }
+      .form-label {
+        width: 100%;
+        text-align: left;
+        padding-right: 0;
+        margin-bottom: 6px;
+        font-size: 14.5px;
+      }
+      .form-input-wrap { width: 100%; }
+      .form-input { padding: 12px 14px; font-size: 15px; }
+
+      .form-actions {
+        margin-left: 0;
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+      }
+      .btn-login {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+      }
+
+      /* Tối ưu màn hình làm bài */
+      .exam-sub-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .timer {
+        align-self: flex-start;
+        font-size: 16px;
+      }
+      .question-title { font-size: 15px; }
+      .option-label { font-size: 14.5px; padding: 10px 12px; }
+    }
   </style>
 </head>
 <body oncontextmenu="return false;" oncopy="return false;" oncut="return false;" onpaste="return false;">
@@ -275,7 +334,7 @@
 
     <div class="notice-bar">
       <span class="notice-icon">✕</span>
-      <span class="notice-text">Yêu cầu làm bài độc lập: Hệ thống tự động ghi nhận nếu chuyển tab hoặc thoát toàn màn hình.</span>
+      <span>Yêu cầu làm bài độc lập: Hệ thống tự động ghi nhận nếu chuyển tab hoặc rời giao diện.</span>
     </div>
 
     <div class="form-container">
@@ -319,8 +378,8 @@
 
     <div class="exam-sub-header">
       <div>
-        <strong id="display-candidate" style="color: #1456a7; font-size: 16px;">Thí sinh: </strong>
-        <div style="font-size: 13px; color: #dc3545; margin-top: 4px;" id="violation-display">Số lần rời màn hình: 0</div>
+        <strong id="display-candidate" style="color: #1456a7; font-size: 15px;">Thí sinh: </strong>
+        <div style="font-size: 12.5px; color: #dc3545; margin-top: 3px;" id="violation-display">Số lần rời màn hình: 0</div>
       </div>
       <div class="timer" id="timer-display">15:00</div>
     </div>
@@ -332,8 +391,8 @@
   </div>
 
   <!-- 3. MÀN HÌNH KẾT QUẢ -->
-  <div id="result-screen" class="exam-box hidden" style="text-align: center; padding: 40px;">
-    <div class="unit-brand-header" style="margin-bottom: 30px;">
+  <div id="result-screen" class="exam-box hidden" style="text-align: center; padding: 30px 15px;">
+    <div class="unit-brand-header" style="margin-bottom: 25px;">
       <img src="logo.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/vi/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original'" alt="Phù hiệu VKSND">
       <div class="unit-brand-text">
         <h1>VIỆN KIỂM SÁT NHÂN DÂN KHU VỰC 1 - HÀ TĨNH</h1>
@@ -341,19 +400,17 @@
       </div>
     </div>
 
-    <h2 style="color: #28a745; margin-bottom: 12px; font-size: 22px;">ĐÃ NỘP BÀI THÀNH CÔNG</h2>
-    <p style="font-size: 15px; margin-bottom: 15px; color: #555;">Dữ liệu bài làm đã được đồng bộ vào hệ thống đánh giá.</p>
-    <p id="score-summary" style="font-size: 24px; font-weight: bold; color: #1456a7;"></p>
+    <h2 style="color: #28a745; margin-bottom: 10px; font-size: 20px;">ĐÃ NỘP BÀI THÀNH CÔNG</h2>
+    <p style="font-size: 14px; margin-bottom: 15px; color: #555;">Dữ liệu bài làm đã được đồng bộ vào hệ thống đánh giá.</p>
+    <p id="score-summary" style="font-size: 22px; font-weight: bold; color: #1456a7;"></p>
   </div>
 
 <script>
-  // CẤU HÌNH HỆ THỐNG
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOOFw-3NI8z-mGhZ5dwtdncc_LhZK8flT0di_d0dD-xsbgpyJ2wa0Da6UODcVgoRiz/exec";
-  const DURATION_MINUTES = 15;      // Thời gian thi (phút)
-  const MAX_VIOLATIONS = 3;        // Giới hạn chuyển tab tối đa trước khi tự nộp
-  const EXAM_QUESTION_COUNT = 30;  // Số câu hỏi rút ngẫu nhiên cho mỗi lượt thi
+  const DURATION_MINUTES = 15;
+  const MAX_VIOLATIONS = 3;
+  const EXAM_QUESTION_COUNT = 30;
 
-  // NGÂN HÀNG CÂU HỎI (Bạn có thể thêm 50, 100 hoặc 200 câu vào danh sách này)
   const rawQuestions = [
     {
       id: 1,
@@ -383,7 +440,6 @@
   let isSubmitted = false;
   let startTime = 0;
 
-  // Thuật toán xáo trộn mảng Fisher-Yates
   function shuffle(array) {
     let arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -420,13 +476,9 @@
 
   function renderQuestions() {
     const container = document.getElementById('questions-container');
-
-    // 1. Xáo trộn toàn bộ ngân hàng câu hỏi
-    // 2. Rút ngẫu nhiên đúng số câu quy định (30 câu; nếu ngân hàng chưa đủ 30 câu thì lấy hết số câu hiện có)
     const takeCount = Math.min(EXAM_QUESTION_COUNT, rawQuestions.length);
     const selectedPool = shuffle(rawQuestions).slice(0, takeCount);
 
-    // 3. Xáo trộn ngẫu nhiên thứ tự các đáp án cho từng câu hỏi
     randomizedQuestions = selectedPool.map(q => {
       let mappedOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
       mappedOptions = shuffle(mappedOptions);
@@ -501,7 +553,6 @@
     isSubmitted = true;
     clearInterval(timerInterval);
 
-    // Tính điểm tự động theo bộ câu hỏi đã bốc thăm
     let score = 0;
     randomizedQuestions.forEach(q => {
       const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
@@ -520,7 +571,6 @@
       timeSpent: Math.round((Date.now() - startTime) / 1000)
     };
 
-    // Gửi kết quả về Google Sheet
     fetch(SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
