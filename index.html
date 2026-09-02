@@ -31,7 +31,6 @@
       filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
       flex-shrink: 0;
     }
-    /* CĂN GIỮA DÒNG 2 SO VỚI DÒNG 1 */
     .unit-brand-text {
       text-align: center;
       display: flex;
@@ -39,7 +38,6 @@
       align-items: center;
       justify-content: center;
     }
-    /* DÒNG 1: VIỆN KIỂM SÁT NHÂN DÂN KHU VỰC 1 - HÀ TĨNH */
     .unit-brand-text h1 {
       font-size: 22.5px;
       font-weight: 750;
@@ -48,7 +46,6 @@
       white-space: nowrap;
       margin-bottom: 6px;
     }
-    /* DÒNG 2: HỆ THỐNG THI TRỰC TUYẾN */
     .unit-brand-text h2 {
       font-size: 20px;
       font-weight: 750;
@@ -352,10 +349,11 @@
 <script>
   // CẤU HÌNH HỆ THỐNG
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwOOFw-3NI8z-mGhZ5dwtdncc_LhZK8flT0di_d0dD-xsbgpyJ2wa0Da6UODcVgoRiz/exec";
-  const DURATION_MINUTES = 15;
-  const MAX_VIOLATIONS = 3;
+  const DURATION_MINUTES = 15;      // Thời gian thi (phút)
+  const MAX_VIOLATIONS = 3;        // Giới hạn chuyển tab tối đa trước khi tự nộp
+  const EXAM_QUESTION_COUNT = 30;  // Số câu hỏi rút ngẫu nhiên cho mỗi lượt thi
 
-  // NGÂN HÀNG CÂU HỎI
+  // NGÂN HÀNG CÂU HỎI (Bạn có thể thêm 50, 100 hoặc 200 câu vào danh sách này)
   const rawQuestions = [
     {
       id: 1,
@@ -385,6 +383,7 @@
   let isSubmitted = false;
   let startTime = 0;
 
+  // Thuật toán xáo trộn mảng Fisher-Yates
   function shuffle(array) {
     let arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -421,7 +420,14 @@
 
   function renderQuestions() {
     const container = document.getElementById('questions-container');
-    randomizedQuestions = shuffle(rawQuestions).map(q => {
+
+    // 1. Xáo trộn toàn bộ ngân hàng câu hỏi
+    // 2. Rút ngẫu nhiên đúng số câu quy định (30 câu; nếu ngân hàng chưa đủ 30 câu thì lấy hết số câu hiện có)
+    const takeCount = Math.min(EXAM_QUESTION_COUNT, rawQuestions.length);
+    const selectedPool = shuffle(rawQuestions).slice(0, takeCount);
+
+    // 3. Xáo trộn ngẫu nhiên thứ tự các đáp án cho từng câu hỏi
+    randomizedQuestions = selectedPool.map(q => {
       let mappedOptions = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
       mappedOptions = shuffle(mappedOptions);
       return { ...q, options: mappedOptions };
@@ -495,6 +501,7 @@
     isSubmitted = true;
     clearInterval(timerInterval);
 
+    // Tính điểm tự động theo bộ câu hỏi đã bốc thăm
     let score = 0;
     randomizedQuestions.forEach(q => {
       const selected = document.querySelector(`input[name="q_${q.id}"]:checked`);
@@ -513,6 +520,7 @@
       timeSpent: Math.round((Date.now() - startTime) / 1000)
     };
 
+    // Gửi kết quả về Google Sheet
     fetch(SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
