@@ -133,6 +133,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       margin-left: 155px;
       margin-top: 8px;
     }
@@ -146,11 +147,16 @@
       color: #e2edff;
     }
     .checkbox-label input { width: 16px; height: 16px; cursor: pointer; }
+    
+    .action-buttons-group {
+      display: flex;
+      gap: 10px;
+    }
     .btn-login {
       background: #ffffff;
       color: #1456a7;
       border: none;
-      padding: 10px 26px;
+      padding: 10px 22px;
       border-radius: 6px;
       font-size: 14.5px;
       font-weight: 700;
@@ -165,6 +171,21 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 14px rgba(0,0,0,0.2);
     }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+
     .portal-footer {
       border-top: 1px solid rgba(255,255,255,0.2);
       margin-top: 30px;
@@ -175,7 +196,7 @@
       color: #dbe7fc;
     }
 
-    /* 2. GIAO DIỆN LÀM BÀI & KẾT QUẢ */
+    /* 2. GIAO DIỆN LÀM BÀI, KẾT QUẢ & XẾP HẠNG */
     .exam-box {
       width: 100%;
       max-width: 880px;
@@ -257,14 +278,69 @@
     }
     .btn-submit:hover { background: #1251a3; }
 
-    /* 3. HỘP THOẠI DỰ ĐOÁN (CẢI TIẾN TRÊN DI ĐỘNG) */
+    /* 3. BẢNG XẾP HẠNG */
+    .leaderboard-wrap {
+      margin-top: 25px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .leaderboard-title {
+      background: #1456a7;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .leaderboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14.5px;
+      text-align: left;
+    }
+    .leaderboard-table th {
+      background: #f1f5f9;
+      color: #475569;
+      padding: 12px 14px;
+      font-weight: 600;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .leaderboard-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+    .leaderboard-table tr:hover {
+      background: #f8fafc;
+    }
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 13px;
+    }
+    .rank-1 { background: #fef08a; color: #854d0e; border: 1px solid #facc15; }
+    .rank-2 { background: #e2e8f0; color: #475569; border: 1px solid #cbd5e1; }
+    .rank-3 { background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; }
+    .rank-other { background: #f1f5f9; color: #64748b; }
+
+    /* MODAL POPUP */
     .modal-backdrop {
       position: fixed;
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
       background: rgba(0, 0, 0, 0.7);
-      display: none; /* Mặc định ẩn, bật lên bằng display: flex */
+      display: none;
       align-items: center;
       justify-content: center;
       z-index: 999999;
@@ -346,7 +422,7 @@
 
     .hidden { display: none !important; }
 
-    /* RESPONSIVE CHO ĐIỆN THOẠI */
+    /* RESPONSIVE */
     @media (max-width: 680px) {
       body { padding: 10px; }
       .portal-box, .exam-box { padding: 25px 16px; border-radius: 8px; }
@@ -360,11 +436,13 @@
       .form-input-wrap { width: 100%; }
       .form-input { padding: 12px 14px; font-size: 15px; }
       .form-actions { margin-left: 0; flex-direction: column; gap: 15px; align-items: stretch; }
-      .btn-login { width: 100%; padding: 12px; font-size: 15px; }
+      .action-buttons-group { flex-direction: column; }
+      .btn-login, .btn-secondary { width: 100%; padding: 12px; font-size: 15px; }
       .exam-sub-header { flex-direction: column; align-items: flex-start; gap: 10px; }
       .timer { align-self: flex-start; font-size: 16px; }
       .modal-buttons { flex-direction: column-reverse; }
       .btn-modal-cancel, .btn-modal-confirm { width: 100%; padding: 12px; }
+      .leaderboard-table th, .leaderboard-table td { padding: 8px 6px; font-size: 13px; }
     }
   </style>
 </head>
@@ -396,7 +474,7 @@
       <div class="form-row">
         <label class="form-label" for="user-id">Tài khoản / SBD:</label>
         <div class="form-input-wrap">
-          <input type="text" id="user-id" class="form-input" placeholder="Năm sinh" required>
+          <input type="text" id="user-id" class="form-input" placeholder="Ví dụ: ha_tinh_01" required>
         </div>
       </div>
 
@@ -404,7 +482,10 @@
         <label class="checkbox-label">
           <input type="checkbox" checked> Duy trì trạng thái
         </label>
-        <button class="btn-login" onclick="startExam()">Đăng nhập thi</button>
+        <div class="action-buttons-group">
+          <button type="button" class="btn-secondary" onclick="showLeaderboardScreen()">Bảng xếp hạng</button>
+          <button type="button" class="btn-login" onclick="startExam()">Đăng nhập thi</button>
+        </div>
       </div>
     </div>
 
@@ -438,7 +519,7 @@
     </form>
   </div>
 
-  <!-- 3. HỘP THOẠI CÂU HỎI PHỤ: DỰ ĐOÁN SỐ NGƯỜI (TỐI ƯU CẢM ỨNG) -->
+  <!-- 3. HỘP THOẠI DỰ ĐOÁN -->
   <div id="prediction-modal" class="modal-backdrop">
     <div class="modal-content">
       <h3>CÂU HỎI DỰ ĐOÁN</h3>
@@ -451,9 +532,9 @@
     </div>
   </div>
 
-  <!-- 4. MÀN HÌNH KẾT QUẢ -->
-  <div id="result-screen" class="exam-box hidden" style="text-align: center; padding: 30px 15px;">
-    <div class="unit-brand-header" style="margin-bottom: 25px;">
+  <!-- 4. MÀN HÌNH KẾT QUẢ & XẾP HẠNG -->
+  <div id="result-screen" class="exam-box hidden" style="text-align: center; padding: 30px 20px;">
+    <div class="unit-brand-header" style="margin-bottom: 20px;">
       <img src="logo.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/vi/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original'" alt="Phù hiệu VKSND">
       <div class="unit-brand-text">
         <h1>VIỆN KIỂM SÁT NHÂN DÂN KHU VỰC 1 - HÀ TĨNH</h1>
@@ -461,18 +542,74 @@
       </div>
     </div>
 
-    <h2 style="color: #28a745; margin-bottom: 10px; font-size: 20px;">ĐÃ NỘP BÀI THÀNH CÔNG</h2>
-    <p style="font-size: 14px; margin-bottom: 15px; color: #555;">Dữ liệu bài làm đã được đồng bộ vào hệ thống đánh giá.</p>
-    <p id="score-summary" style="font-size: 22px; font-weight: bold; color: #1456a7; margin-bottom: 8px;"></p>
-    <p id="prediction-summary" style="font-size: 16px; color: #555;"></p>
+    <h2 style="color: #28a745; margin-bottom: 8px; font-size: 21px;">ĐÃ NỘP BÀI THÀNH CÔNG</h2>
+    <p style="font-size: 14px; margin-bottom: 12px; color: #555;">Dữ liệu bài làm đã được lưu vào hệ thống đánh giá.</p>
+    <p id="score-summary" style="font-size: 24px; font-weight: bold; color: #1456a7; margin-bottom: 6px;"></p>
+    <p id="prediction-summary" style="font-size: 15px; color: #555; margin-bottom: 20px;"></p>
+
+    <!-- Bảng xếp hạng trực tiếp -->
+    <div class="leaderboard-wrap">
+      <div class="leaderboard-title">
+        <span>BẢNG XẾP HẠNG THÀNH TÍCH</span>
+        <button type="button" onclick="loadLeaderboardJSONP('leaderboard-result-body')" style="background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">Cập nhật</button>
+      </div>
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th style="width: 12%; text-align: center;">Hạng</th>
+            <th style="width: 38%;">Họ và tên</th>
+            <th style="width: 18%; text-align: center;">Điểm số</th>
+            <th style="width: 16%; text-align: center;">Thời gian</th>
+            <th style="width: 16%; text-align: center;">Dự đoán</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-result-body">
+          <tr><td colspan="5" style="text-align: center; color: #888; padding: 20px;">Đang tải bảng xếp hạng...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 5. MÀN HÌNH XEM BẢNG XẾP HẠNG RIÊNG -->
+  <div id="leaderboard-screen" class="exam-box hidden" style="padding: 30px 20px;">
+    <div class="unit-brand-header" style="margin-bottom: 20px;">
+      <img src="logo.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/vi/b/ba/Ph%C3%B9_hi%E1%BB%87u_Vi%E1%BB%87n_ki%E1%BB%83m_s%C3%A1t_nh%C3%A2n_d%C3%A2n.svg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original'" alt="Phù hiệu VKSND">
+      <div class="unit-brand-text">
+        <h1>VIỆN KIỂM SÁT NHÂN DÂN KHU VỰC 1 - HÀ TĨNH</h1>
+        <h2>BẢNG XẾP HẠNG THI TRỰC TUYẾN</h2>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+      <button type="button" class="btn-secondary" style="background: #1456a7; color: #fff; border: none;" onclick="backToLoginScreen()">← Quay lại trang chính</button>
+      <button type="button" class="btn-secondary" style="background: #f1f5f9; color: #1456a7; border: 1px solid #cbd5e1;" onclick="loadLeaderboardJSONP('leaderboard-standalone-body')">Tải lại</button>
+    </div>
+
+    <div class="leaderboard-wrap">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th style="width: 12%; text-align: center;">Hạng</th>
+            <th style="width: 38%;">Họ và tên</th>
+            <th style="width: 18%; text-align: center;">Điểm số</th>
+            <th style="width: 16%; text-align: center;">Thời gian</th>
+            <th style="width: 16%; text-align: center;">Dự đoán</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-standalone-body">
+          <tr><td colspan="5" style="text-align: center; color: #888; padding: 20px;">Đang tải bảng xếp hạng...</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbybi3QuFVPSz0hjuFt-KOsiS43wwUPJaUp37Cjh9g0vaLXYg3Cp1ogYgw6sprndn0U/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyzsmcWgdpi-JdTIxTK1BRyOsaWOrq9Lh8LF1zz0JmZSmsFMgCe97wonhiUDAjq0GRT/exec";
   const DURATION_MINUTES = 15;
-  const MAX_VIOLATIONS = 10;
-  const EXAM_QUESTION_COUNT = 20;
-const rawQuestions = [
+  const MAX_VIOLATIONS = 3;
+  const EXAM_QUESTION_COUNT = 30;
+
+  const rawQuestions = [
   {
     id: 1,
     question: "Tinh thần xuyên suốt của Quy định số 207QĐ/TW về những điều đảng viên không được làm nhằm tạo động lực công tác nhưng vẫn giữ nghiêm kỷ cương là gì?",
@@ -1143,6 +1280,7 @@ const rawQuestions = [
   let isSubmitted = false;
   let startTime = 0;
   let userPredictionValue = 0;
+  let currentTargetTableId = 'leaderboard-result-body';
 
   function shuffle(array) {
     let arr = [...array];
@@ -1151,6 +1289,13 @@ const rawQuestions = [
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
+  }
+
+  function formatTime(seconds) {
+    if (!seconds) return "00:00";
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   }
 
   function startExam() {
@@ -1250,15 +1395,12 @@ const rawQuestions = [
     }
   }
 
-  /* XỬ LÝ HỘP THOẠI DỰ ĐOÁN CHUẨN DI ĐỘNG */
   function promptPredictionModal() {
-    const modal = document.getElementById('prediction-modal');
-    modal.classList.add('active'); // Bật modal bằng class active độc lập
+    document.getElementById('prediction-modal').classList.add('active');
   }
 
   function closePredictionModal() {
-    const modal = document.getElementById('prediction-modal');
-    modal.classList.remove('active');
+    document.getElementById('prediction-modal').classList.remove('active');
   }
 
   function confirmSubmitWithPrediction() {
@@ -1308,12 +1450,89 @@ const rawQuestions = [
       document.exitFullscreen().catch(() => {});
     }
 
-    // Đảm bảo đóng modal và ẩn màn hình thi
     closePredictionModal();
     document.getElementById('exam-screen').classList.add('hidden');
     document.getElementById('result-screen').classList.remove('hidden');
     document.getElementById('score-summary').innerText = `Kết quả: ${score} / ${randomizedQuestions.length} câu`;
     document.getElementById('prediction-summary').innerText = `Dự đoán số người có cùng kết quả: ${predictionVal}`;
+
+    // Đợi 1.5 giây để Google Sheet ghi xong rồi tải bảng xếp hạng
+    setTimeout(() => {
+      loadLeaderboardJSONP('leaderboard-result-body');
+    }, 1500);
+  }
+
+  /* ==========================================================
+     GIẢI PHÁP JSONP: TẢI BẢNG XẾP HẠNG KHÔNG BAO GIỜ LỖI CORS
+     ========================================================== */
+  function loadLeaderboardJSONP(targetTableId) {
+    currentTargetTableId = targetTableId;
+    const tbody = document.getElementById(targetTableId);
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #888; padding: 20px;">Đang đồng bộ dữ liệu từ hệ thống...</td></tr>`;
+
+    // Xóa thẻ script cũ nếu có
+    const oldScript = document.getElementById('jsonp-leaderboard-script');
+    if (oldScript) oldScript.remove();
+
+    // Tạo thẻ script mới nạp qua JSONP
+    const script = document.createElement('script');
+    script.id = 'jsonp-leaderboard-script';
+    // Thêm timestamp để không bị dính cache trình duyệt
+    script.src = `${SCRIPT_URL}?callback=handleLeaderboardResponse&_t=${Date.now()}`;
+    script.onerror = function() {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #dc3545; padding: 20px;">Không thể kết nối máy chủ Google Sheets.</td></tr>`;
+    };
+    document.body.appendChild(script);
+  }
+
+  // Hàm callback toàn cục nhận dữ liệu JSONP từ Apps Script
+  window.handleLeaderboardResponse = function(data) {
+    const tbody = document.getElementById(currentTargetTableId);
+    if (!tbody) return;
+
+    if (!data || data.length === 0 || data.error) {
+      tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #888; padding: 20px;">Chưa có lượt thi nào hoàn thành.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = data.map((item, index) => {
+      let rankClass = "rank-other";
+      if (index === 0) rankClass = "rank-1";
+      else if (index === 1) rankClass = "rank-2";
+      else if (index === 2) rankClass = "rank-3";
+
+      return `
+        <tr>
+          <td style="text-align: center;">
+            <span class="rank-badge ${rankClass}">${index + 1}</span>
+          </td>
+          <td>
+            <div style="font-weight: 600; color: #1e293b;">${item.fullName}</div>
+            <div style="font-size: 11.5px; color: #64748b;">SBD: ${item.userId}</div>
+          </td>
+          <td style="text-align: center; font-weight: bold; color: #1456a7;">
+            ${item.score}/${item.totalQuestions}
+          </td>
+          <td style="text-align: center; font-size: 13px;">
+            ${formatTime(item.timeSpent)}
+          </td>
+          <td style="text-align: center; color: #64748b;">
+            ${item.prediction}
+          </td>
+        </tr>
+      `;
+    }).join('');
+  };
+
+  function showLeaderboardScreen() {
+    document.getElementById('login-screen').classList.add('hidden');
+    document.getElementById('leaderboard-screen').classList.remove('hidden');
+    loadLeaderboardJSONP('leaderboard-standalone-body');
+  }
+
+  function backToLoginScreen() {
+    document.getElementById('leaderboard-screen').classList.add('hidden');
+    document.getElementById('login-screen').classList.remove('hidden');
   }
 </script>
 </body>
