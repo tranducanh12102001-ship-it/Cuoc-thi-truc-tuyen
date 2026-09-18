@@ -37,12 +37,26 @@
       flex-direction: column;
       align-items: center;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* CANVAS HIỆU ỨNG HẠT CHUYỂN ĐỘNG NỀN */
+    #ambient-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* THANH ĐIỀU HƯỚNG TRÊN (STICKY NAV) */
     .top-navbar {
       width: 100%;
-      background: var(--color-paper-white);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
       position: sticky;
       top: 0;
@@ -99,6 +113,8 @@
       max-width: 960px;
       margin: 32px auto 48px;
       padding: 0 16px;
+      position: relative;
+      z-index: 1;
     }
 
     /* 1. MÀN HÌNH ĐĂNG NHẬP / HERO BANNER */
@@ -513,6 +529,9 @@
 </head>
 <body oncontextmenu="return false;" oncopy="return false;" oncut="return false;" onpaste="return false;">
 
+  <!-- CANVAS HIỆU ỨNG HẠT CHUYỂN ĐỘNG NỀN -->
+  <canvas id="ambient-canvas"></canvas>
+
   <!-- THANH ĐIỀU HƯỚNG TRÊN -->
   <header class="top-navbar">
     <div class="nav-content">
@@ -543,7 +562,7 @@
         
         <div class="notice-pill">
           <span>i</span>
-          Hệ thống ghi nhận lượt chuyển tab và tự động nộp bài nếu vi phạm quá 10 lần.
+          Hệ thống ghi nhận lượt chuyển tab và tự động nộp bài nếu vi phạm quá 3 lần.
         </div>
 
         <div class="input-wrapper">
@@ -929,6 +948,81 @@
     document.getElementById('leaderboard-screen').classList.add('hidden');
     document.getElementById('login-screen').classList.remove('hidden');
   }
+
+  /* ==========================================================
+     CANVAS ANIMATION: HẠT NỀN CHUYỂN ĐỘNG (BUSUU PALETTE)
+     ========================================================== */
+  (function initAmbientParticles() {
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    // Tinh chỉnh tông màu hạt Busuu pastel nhẹ nhàng trên nền sáng Canvas Mist
+    const colors = [
+      'rgba(17, 110, 238, 0.28)',  // Signal Blue
+      'rgba(59, 30, 144, 0.22)',   // Deep Indigo
+      'rgba(17, 238, 146, 0.35)',  // Spring Mint
+      'rgba(255, 184, 41, 0.32)'   // Saffron Spark
+    ];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Khởi tạo số lượng hạt vừa phải để tối ưu hiệu năng
+    const count = window.innerWidth < 680 ? 25 : 45;
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        size: Math.random() * 3.5 + 2.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rot: Math.random() * Math.PI,
+        vrot: (Math.random() - 0.5) * 0.015
+      });
+    }
+
+    function drawTriangle(x, y, size, rot, color) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(rot);
+      ctx.beginPath();
+      ctx.moveTo(0, -size);
+      ctx.lineTo(size * 0.86, size * 0.5);
+      ctx.lineTo(-size * 0.86, size * 0.5);
+      ctx.closePath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.rot += p.vrot;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        drawTriangle(p.x, p.y, p.size, p.rot, p.color);
+      });
+
+      requestAnimationFrame(loop);
+    }
+    loop();
+  })();
 </script>
 </body>
 </html>
