@@ -485,7 +485,7 @@
         </div>
         <div class="brand-titles">
           <span class="unit-name">VIỆN KIỂM SÁT NHÂN DÂN KHU VỰC 1 - HÀ TĨNH</span>
-          <span class="app-name">Cổng Khảo Sát Nghiệp Vụ Trực Tuyến</span>
+          <span class="app-name">Hệ thống thi trực tuyến nội bộ</span>
         </div>
       </div>
       <button type="button" class="btn-outlined-action" onclick="showLeaderboardScreen()">Bảng Xếp Hạng</button>
@@ -497,28 +497,28 @@
     <div id="login-screen">
       <div class="hero-block">
         <span class="hero-tag">Chuyển đổi số ngành Kiểm sát 2026</span>
-        <h1 class="hero-heading">Nền tảng khảo sát nghiệp vụ<br>& nhận thức kỷ cương Đảng</h1>
-        <p class="hero-subhead">Mỗi bài thi được hệ thống trích xuất ngẫu nhiên 30 câu hỏi từ ngân hàng đề chung. Yêu cầu làm bài độc lập và nghiêm túc.</p>
+        <h1 class="hero-heading">Tìm hiểu về các quy định mới của Đảng<br> về kỷ luật, kỷ cương và thi hành Điều lệ Đảng năm 2026</h1>
+        <p class="hero-subhead"> Yêu cầu làm bài độc lập và nghiêm túc.</p>
       </div>
 
       <div class="clearbit-card">
         <div class="card-label-heading">
-          <span>Xác nhận danh tính thí sinh</span>
+          <span>Đăng nhập</span>
           <span style="font-size: 12px; font-weight: 400; color: var(--color-slate);">Thời lượng: 15 phút</span>
         </div>
         
         <div class="notice-record">
-          <strong>Lưu ý giám sát:</strong> Hệ thống tự động ghi nhận nhật ký thao tác nếu thí sinh chuyển tab hoặc rời giao diện quá 3 lần.
+          <strong>Lưu ý:</strong> Hệ thống tự động ghi nhận nhật ký thao tác nếu thí sinh chuyển tab hoặc rời giao diện quá 3 lần.
         </div>
 
         <div class="form-stack">
           <input type="text" id="full-name" class="input-field" placeholder="Họ và tên thí sinh" required>
-          <input type="text" id="user-id" class="input-field" placeholder="Năm sinh / Mã định danh (Ví dụ: 2001)" required>
+          <input type="text" id="user-id" class="input-field" placeholder="Số báo danh (Ví dụ: 2001)" required>
         </div>
 
         <div class="btn-actions">
           <button type="button" class="btn-primary-action" onclick="startExam()">Bắt Đầu Làm Bài</button>
-          <button type="button" class="btn-outlined-action" onclick="showLeaderboardScreen()">Xem Thành Tích Đạt 20đ</button>
+          <button type="button" class="btn-outlined-action" onclick="showLeaderboardScreen()">Xem kết quả</button>
         </div>
       </div>
     </div>
@@ -545,7 +545,7 @@
     <div id="prediction-modal" class="modal-veil">
       <div class="modal-box">
         <h3>Câu Hỏi Phụ Dự Đoán</h3>
-        <p>Theo đồng chí, có bao nhiêu người tham gia đợt thi này có cùng số câu trả lời chính xác như đồng chí?</p>
+        <p>Theo đồng chí, có bao nhiêu người tham gia có cùng số câu trả lời chính xác như đồng chí?</p>
         <input type="number" id="user-prediction" class="modal-input" placeholder="Nhập số dự đoán" min="0" inputmode="numeric">
         <div class="btn-actions" style="justify-content: center;">
           <button type="button" class="btn-outlined-action" onclick="closePredictionModal()">Xem lại bài</button>
